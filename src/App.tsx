@@ -1,21 +1,36 @@
 import React from "react"
-import logo from "./logo.svg"
-import "./App.css"
+import {
+    Router,
+    Route
+    // Switch
+} from "react-router-dom"
+import {
+    HomeRoute,
+    DashboardRoute
+    // SupportRoute
+} from "routes"
+import { createBrowserHistory } from "history"
+
+// import { NotFoundPage } from "pages/notfound"
+
+const customHistory = createBrowserHistory()
 
 const App: React.FC = () => {
     return (
-        <div className='App'>
-            <header className='App-header'>
-                <img src={logo} className='App-logo' alt='logo' />
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a className='App-link' href='https://reactjs.org' target='_blank' rel='noopener noreferrer'>
-                    Learn React
-                </a>
-            </header>
-        </div>
+        <Router history={customHistory}>
+            <Route path='/'>
+                <HomeRoute />
+            </Route>
+            <Route path='/manage'>
+                <DashboardRoute />
+            </Route>
+            {/* <Route path='/support'>
+                <SupportRoute />
+            </Route>
+            <Route path='*'>
+                <NotFoundPage />
+            </Route> */}
+        </Router>
     )
 }
-
 export default App
