@@ -13,7 +13,7 @@ import { setContext } from "@apollo/client/link/context"
 // Instantiate required constructor fields
 const cache = new InMemoryCache()
 const link = createHttpLink({
-    uri: "http://localhost:3001/graphql"
+    uri: "https://apresiasi.herokuapp.com/graphql"
 })
 
 const authMiddleware = setContext((_, { headers }) => {
