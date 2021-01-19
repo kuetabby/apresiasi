@@ -82,7 +82,6 @@ const LoginPage: React.FC = () => {
                                 isSignedIn={false}
                                 onSuccess={responseGoogle}
                                 onFailure={responseGoogle}
-                                cookiePolicy={"single_host_origin"}
                             />
                         </Row>
                     </Card>
