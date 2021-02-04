@@ -62,7 +62,7 @@ const LoginPage: React.FC = () => {
                         <Divider> &nbsp;With&nbsp;</Divider>
                         <Row height='200px' justifyContent='center' alignItems='center'>
                             <GoogleLogin
-                                clientId='669952821661-60nv9e80bpob92ijcjd60qdd243h5kr5.apps.googleusercontent.com'
+                                clientId={String(process.env.REACT_APP_GOOGLE_CLIENT)}
                                 render={(renderProps: {
                                     onClick: () => void
                                     disabled?: boolean | undefined
