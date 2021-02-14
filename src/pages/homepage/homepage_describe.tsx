@@ -47,21 +47,24 @@ const BoxSubText = styled(Box)`
         padding: 0 0.5em 0 0.5em;
     }
 `
+
 const BoxContentImg = styled(Box)`
-    width: 100%;
+    width: 90rem;
+    height: 18.75rem;
     box-sizing: border-box;
 
     ${mediaQueries.lg} {
-        max-width: 45%;
+        width: 11.52rem;
+        height: 6.3125rem;
         flex-basis: 50%;
         order: 1;
     }
 `
 const BoxImg = styled(Image)`
-    max-width: 100%;
-    max-height: 300px;
+    max-width: 90rem;
+    max-height: 18.75rem;
     ${mediaQueries.lg} {
-        max-height: 500px;
+        max-height: 31.25rem;
     }
 `
 
@@ -71,7 +74,12 @@ export const DescribeComponent: React.FC = () => {
         <WrapperDescribe>
             <BoxContent>
                 <BoxContentImg>
-                    <BoxImg src='https://trakteer.id/images/mix/bg-3.png' />
+                    <BoxImg
+                        src='https://trakteer.id/images/mix/bg-3.png'
+                        alt='describe-image'
+                        width='1024'
+                        height='576'
+                    />
                 </BoxContentImg>
                 <BoxSubContent>
                     <Heading as='h2'>Platform digital untuk mendukung content creator</Heading>
