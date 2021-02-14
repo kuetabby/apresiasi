@@ -33,7 +33,7 @@ export const HeaderHomepage: React.FC = () => {
             <NavMain>
                 {isOpen ? null : (
                     <NavItem to='/'>
-                        <Heading as='h2' size='xl'>
+                        <Heading as='h2' size='xl' marginLeft='5px'>
                             Apresiasi
                         </Heading>
                     </NavItem>
