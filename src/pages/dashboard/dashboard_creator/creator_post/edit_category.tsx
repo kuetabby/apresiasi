@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { Fragment, useState, useEffect } from "react"
-import { gql, useQuery, useMutation } from "@apollo/client"
+import React, { Fragment } from "react"
 import {
     Button,
     Box,
@@ -14,17 +13,12 @@ import {
     ModalBody,
     ModalFooter,
     Select,
-    Spinner,
-    useToast,
-    useDisclosure
+    Spinner
 } from "@chakra-ui/core"
 import styled from "@emotion/styled"
 
 import { colors } from "components/utils/variables"
-
-interface ButtonEditProps {
-    notFull?: boolean
-}
+import { ApolloError } from "@apollo/client"
 
 const HeadContainer = styled(ModalHeader)`
     text-align: center;
@@ -49,21 +43,6 @@ const FooterButton = styled(Button)`
     cursor: pointer;
 `
 
-const ButtonEdit = styled(Button)<ButtonEditProps>`
-    width:  ${props => (props.notFull ? "auto" : "100%;")}
-    height: 30px;
-    background-color: ${colors.yellow};
-    border: none;
-    border-radius: 30px;
-    color: ${colors.white};
-    margin: 1em auto;
-    cursor: pointer;
-
-    &:hover {
-        background-color: orange;
-    }
-`
-
 const BoxFlex = styled(Box)`
     display: flex;
     justify-content: space-between;
@@ -82,74 +61,31 @@ const BoxLabel = styled(FormLabel)`
     text-align: left;
     width: 30%;
 `
-
-const GET_CATEGORY = gql`
-    {
-        getAllCategory {
-            id
-            category
-        }
-    }
-`
-
-const UPDATE_PROFILE = gql`
-    mutation UpdateProfile($category: String!) {
-        updateUser(data: { category: $category }) {
-            category
-        }
-    }
-`
-
 interface Props {
-    data: any
+    isOpen: boolean
+    isLoading: boolean
+    isLoadingUpdate: boolean
+    onError: ApolloError | undefined
+    dataCategory: any
+    category: string
+    onClose: () => void
+    onChangeState: (e: React.ChangeEvent<HTMLSelectElement>) => void
+    onUpdateUser: () => void
 }
 
-export const CategoryEdit: React.FC<Props> = ({ data }) => {
-    const toast = useToast()
-    const { isOpen, onClose, onOpen } = useDisclosure()
-
-    const { loading, error, data: dataCategory } = useQuery(GET_CATEGORY)
-    const [UpdateProfile, { loading: loadingUpdate }] = useMutation(UPDATE_PROFILE, {
-        onError: err => {
-            console.log(err.stack)
-        },
-        onCompleted: () => {
-            onClose()
-            toast({
-                title: "Category Updated!",
-                position: "top",
-                description: "Mohon Refresh Page",
-                status: "success",
-                duration: 3000
-            })
-        }
-    })
-
-    const [category, setState] = useState("")
-
-    useEffect(() => {
-        if (data) {
-            setState(data.category)
-        }
-    }, [data])
-
-    const onChangeState = (e: any) => {
-        const { value } = e.target
-
-        setState(value)
-    }
-
-    const onUpdateUser = () => {
-        UpdateProfile({
-            variables: {
-                category
-            }
-        })
-    }
-
+export const CategoryEdit: React.FC<Props> = ({
+    isOpen,
+    isLoading,
+    isLoadingUpdate,
+    dataCategory,
+    category,
+    onError,
+    onClose,
+    onChangeState,
+    onUpdateUser
+}) => {
     return (
         <React.Fragment>
-            <ButtonEdit onClick={onOpen}>Edit Category</ButtonEdit>
             <FormControl>
                 <Modal isOpen={isOpen} onClose={onClose} size='xl'>
                     <ModalOverlay />
@@ -164,12 +100,12 @@ export const CategoryEdit: React.FC<Props> = ({ data }) => {
                         />
                         <ModalBody>
                             <BodyContainer>
-                                {error ? (
+                                {onError ? (
                                     <BoxQuery>
                                         <p>Something went wrong...</p>
                                     </BoxQuery>
                                 ) : null}
-                                {loading ? (
+                                {isLoading ? (
                                     <BoxQuery>
                                         <Spinner />
                                     </BoxQuery>
@@ -197,7 +133,7 @@ export const CategoryEdit: React.FC<Props> = ({ data }) => {
                             <FooterButton
                                 variantColor='blue'
                                 onClick={onUpdateUser}
-                                isDisabled={!category || loadingUpdate}
+                                isDisabled={!category || isLoadingUpdate}
                             >
                                 Simpan
                             </FooterButton>

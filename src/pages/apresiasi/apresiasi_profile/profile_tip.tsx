@@ -180,7 +180,7 @@ export const TipComponent: React.FC<Props> = ({ onClose, isOpen, data }) => {
                 <Modal isOpen={isOpen} onClose={onClose} size='xl'>
                     <ModalOverlay />
                     <ModalContent>
-                        <HeadContainer>Apresiasi {data.getUserById.name}</HeadContainer>
+                        <HeadContainer>Apresiasi {data && data.getUserById.name}</HeadContainer>
                         <ModalCloseButton
                             cursor='pointer'
                             backgroundColor='#be1e2d'

@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import React, { useState, useEffect } from "react"
-import { gql, useMutation } from "@apollo/client"
+import React from "react"
 import {
     Button,
     Box,
-    // Input,
     FormControl,
     FormLabel,
     Modal,
@@ -14,17 +12,11 @@ import {
     ModalCloseButton,
     ModalBody,
     ModalFooter,
-    Select,
-    useDisclosure,
-    useToast
+    Select
 } from "@chakra-ui/core"
 import styled from "@emotion/styled"
 
 import { colors } from "components/utils/variables"
-
-interface ButtonEditProps {
-    notFull?: boolean
-}
 
 const HeadContainer = styled(ModalHeader)`
     text-align: center;
@@ -49,27 +41,6 @@ const FooterButton = styled(Button)`
     cursor: pointer;
 `
 
-// const BoxInput = styled(Input)`
-//     border-color: ${colors.darkGrey};
-//     width: 100%;
-//     margin-bottom: 1.5em;
-// `
-
-const ButtonEdit = styled(Button)<ButtonEditProps>`
-    background-color: ${colors.green};
-    border: none;
-    border-radius: 0.25em;
-    width: 45%;
-    color: ${colors.white};
-    margin: 1em auto;
-    cursor: pointer;
-    font-size: 0.9em;
-
-    &:hover {
-        background-color: ${colors.darkGreen};
-    }
-`
-
 const BoxFlex = styled(Box)`
     display: flex;
     justify-content: space-between;
@@ -82,77 +53,25 @@ const BoxLabel = styled(FormLabel)`
     width: 30%;
 `
 
-// const BoxAt = styled(Box)`
-//     display: flex;
-//     align-items: center;
-//     flex-basis: auto;
-//     border: 1px solid;
-//     border-radius: 0.25em;
-//     border-color: ${colors.grey};
-//     padding: 1px 0.5em;
-//     height: 2.5rem;
-//     background-color: ${colors.darkGrey};
-// `
-
-const UPDATE_PROFILE = gql`
-    mutation UpdateProfile($is_page_active: String!) {
-        updateUser(data: { is_page_active: $is_page_active }) {
-            is_page_active
-        }
-    }
-`
-
 interface Props {
-    data: any
+    isOpen: boolean
+    isLoadingUpdate: boolean
+    onClose: () => void
+    onUpdateUser: () => void
+    onChangeState: (e: React.ChangeEvent<HTMLSelectElement>) => void
+    page_active: string
 }
 
-// is_page_active
-
-export const SettingsEdit: React.FC<Props> = ({ data }) => {
-    const toast = useToast()
-    const { isOpen, onClose, onOpen } = useDisclosure()
-
-    const [UpdateUser, { loading }] = useMutation(UPDATE_PROFILE, {
-        onError: err => {
-            console.log(err.stack)
-        },
-        onCompleted: () => {
-            onClose()
-            toast({
-                title: "Page Updated!",
-                position: "top",
-                description: "Mohon Refresh Page",
-                status: "success",
-                duration: 3000
-            })
-        }
-    })
-
-    const [page_active, setState] = useState("")
-
-    useEffect(() => {
-        if (data) {
-            setState(data.is_page_active)
-        }
-    }, [data])
-
-    const onChangeState = (e: any) => {
-        const { value } = e.target
-
-        setState(value)
-    }
-
-    const onUpdateUser = () => {
-        UpdateUser({
-            variables: {
-                is_page_active: page_active
-            }
-        })
-    }
-
+export const SettingsEdit: React.FC<Props> = ({
+    isOpen,
+    onClose,
+    onUpdateUser,
+    isLoadingUpdate,
+    onChangeState,
+    page_active
+}) => {
     return (
         <React.Fragment>
-            <ButtonEdit onClick={onOpen}>Page Settings</ButtonEdit>
             <FormControl>
                 <Modal isOpen={isOpen} onClose={onClose} size='xl'>
                     <ModalOverlay />
@@ -193,7 +112,7 @@ export const SettingsEdit: React.FC<Props> = ({ data }) => {
                             <FooterButton
                                 variantColor='blue'
                                 onClick={onUpdateUser}
-                                isDisabled={!page_active || loading}
+                                isDisabled={!page_active || isLoadingUpdate}
                             >
                                 Simpan
                             </FooterButton>

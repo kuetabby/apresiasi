@@ -1,17 +1,12 @@
 import * as React from "react"
-import {
-    Box,
-    Avatar
-    // Progress
-} from "@chakra-ui/core"
+import { Box, Avatar } from "@chakra-ui/core"
 import styled from "@emotion/styled"
 
 import { colors } from "components/utils/variables"
 import { BoxItem2 as BoxLeft } from "components/utils/flex"
 
-import { ProfileEdit } from "./edit_profile"
-import { GoalEdit } from "./edit_goal"
-// import { StatusEdit } from "./edit_status"
+import { Goal } from "./goal"
+import { Profile } from "./profile"
 
 const BoxWrapper = styled(Box)`
     border: 2px dashed;
@@ -36,7 +31,7 @@ const CreatorProfileComponent: React.FC<Props> = ({ data }) => {
                 <Box as='p' marginTop='0px !important'>
                     @{data.username || "username"}
                 </Box>
-                <ProfileEdit data={data} />
+                <Profile data={data} />
             </BoxWrapper>
             <BoxWrapper>
                 <Box as='p'>{data.judul || "Judul"}</Box>
@@ -44,16 +39,8 @@ const CreatorProfileComponent: React.FC<Props> = ({ data }) => {
                     Rp {Number(data.balance).toLocaleString() || 0} terkumpul dari Rp{" "}
                     {Number(data.target_dana).toLocaleString() || 0}
                 </Box>
-                {/* <Progress color='yellow' hasStripe value={data.balance || ""} /> */}
-                {/* <Box as='p' marginTop='5px !important'>
-                    0.00% tercapai
-                </Box> */}
-                <GoalEdit data={data} />
+                <Goal data={data} />
             </BoxWrapper>
-            {/* <BoxWrapper>
-                <Box as='p'>Status</Box>
-                <StatusEdit />
-            </BoxWrapper> */}
         </BoxLeft>
     )
 }

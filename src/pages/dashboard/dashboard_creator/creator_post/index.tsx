@@ -6,10 +6,9 @@ import styled from "@emotion/styled"
 import { colors, mediaQueries } from "components/utils/variables"
 import { BoxItem3 as BoxRightEdit, BoxItem6 as BoxRightPost } from "components/utils/flex"
 
-// import { SummaryEdit } from "./edit_summary"
-import { CategoryEdit } from "./edit_category"
-import { CoverEdit } from "./edit_cover"
-import { SettingsEdit } from "./edit_settings"
+import { Category } from "./category"
+import { Settings } from "./settings"
+import { Cover } from "./cover"
 
 const BoxFlex = styled(Box)`
     justify-content: space-between;
@@ -37,40 +36,6 @@ const BoxRight = styled(Box)`
         margin-top: 2em;
     }
 `
-
-// interface ButtonEditProps {
-//     notFull?: boolean
-// }
-
-// const ButtonEdit = styled(Button)<ButtonEditProps>`
-//     width:  ${props => (props.notFull ? "auto" : "100%;")}
-//     height: 30px;
-//     background-color: ${colors.yellow};
-//     border: none;
-//     border-radius: 30px;
-//     color: ${colors.white};
-//     margin: 1em auto;
-//     cursor: pointer;
-
-//     &:hover {
-//         background-color: orange;
-//     }
-// `
-
-// const ButtonTambah = styled(Button)`
-//     background-color: ${colors.green};
-//     border: none;
-//     border-radius: 0.25em;
-//     width: 45%;
-//     color: ${colors.white};
-//     margin: 1em auto;
-//     cursor: pointer;
-//     font-size: 0.9em;
-
-//     &:hover {
-//         background-color: ${colors.darkGreen};
-//     }
-// `
 
 const BoxWrapper = styled(Box)`
     border: 2px dashed;
@@ -112,10 +77,10 @@ interface Props {
 
 const CreatorPostComponent: React.FC<Props> = ({ data }) => {
     return (
-        <BoxRight>
+        <BoxRight textAlign='center'>
             <BoxCover>
                 <BoxImage backgroundImage={`url(${data.cover_img})` || ""}>
-                    <CoverEdit data={data} />
+                    <Cover data={data} />
                 </BoxImage>
                 <Box padding='5px'>
                     <Box as='p' marginBottom='0px !important'>
@@ -130,7 +95,7 @@ const CreatorPostComponent: React.FC<Props> = ({ data }) => {
             <BoxFlex d='flex'>
                 <BoxRightPost>
                     <BoxWrapper d='flex' borderColor={colors.green + "!important"}>
-                        <SettingsEdit data={data} />
+                        <Settings data={data} />
                     </BoxWrapper>
                     {/* <BoxWrapper d='flex' borderColor={colors.green + "!important"}>
                         <ButtonTambah>Tambah Post</ButtonTambah>
@@ -143,7 +108,7 @@ const CreatorPostComponent: React.FC<Props> = ({ data }) => {
                     </BoxWrapper> */}
                     <BoxWrapper>
                         <ButtonCategory>{data.category || ""}</ButtonCategory>
-                        <CategoryEdit data={data} />
+                        <Category data={data} />
                     </BoxWrapper>
                     {/* <BoxWrapper>
                         <Box as='p'>Twitter</Box>

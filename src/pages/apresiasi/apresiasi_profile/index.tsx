@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, { Fragment } from "react"
+import React, { Fragment, lazy, Suspense } from "react"
 import { Box, Avatar, Button, useDisclosure, Spinner } from "@chakra-ui/core"
 import styled from "@emotion/styled"
 
 import { colors, mediaQueries } from "components/utils/variables"
 import { BoxItem2 as BoxLeft } from "components/utils/flex"
 
-import { TipComponent } from "./profile_tip"
+const Tip = lazy(() => import("./profile_tip").then(({ TipComponent }) => ({ default: TipComponent })))
 
 const BoxWrapper = styled(Box)`
     padding: 10px;
@@ -96,23 +96,35 @@ const ApresiasiProfileComponent: React.FC<Props> = ({ data, onLoading, onError }
                         <Box as='p' marginTop='5px !important'>
                             0.00% tercapai
                         </Box> */}
-                        <ButtonApresiasi
-                            backgroundColor={colors.red}
-                            _hover={{
-                                backgroundColor: "red.500"
-                            }}
-                            onClick={onOpen}
-                            isDisabled={data.getUserById.is_page_active !== "active"}
-                        >
-                            Kirim Dukungan
-                        </ButtonApresiasi>
+                        {!isOpen && (
+                            <ButtonApresiasi
+                                backgroundColor={colors.red}
+                                _hover={{
+                                    backgroundColor: "red.500"
+                                }}
+                                onClick={onOpen}
+                                isDisabled={data.getUserById.is_page_active !== "active"}
+                            >
+                                Kirim Dukungan
+                            </ButtonApresiasi>
+                        )}
+                        {isOpen && (
+                            <Suspense
+                                fallback={
+                                    <BoxQuery>
+                                        <Spinner />
+                                    </BoxQuery>
+                                }
+                            >
+                                <Tip onClose={onClose} data={data} isOpen={isOpen} />
+                            </Suspense>
+                        )}
                     </BoxWrapper>
                     <BoxWrapper backgroundColor={colors.white}>
                         <Box as='p'>{data.getUserById.description}</Box>
                     </BoxWrapper>
                 </Fragment>
             )}
-            {isOpen ? <TipComponent onClose={onClose} data={data} isOpen={isOpen} /> : null}
         </BoxLeft>
     )
 }
