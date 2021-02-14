@@ -1,17 +1,7 @@
 import React from "react"
-import {
-    Router,
-    Route
-    // Switch
-} from "react-router-dom"
-import {
-    HomeRoute,
-    DashboardRoute
-    // SupportRoute
-} from "routes"
+import { Router, Route } from "react-router-dom"
+import { HomeRoute, DashboardRoute } from "routes"
 import { createBrowserHistory } from "history"
-
-// import { NotFoundPage } from "pages/notfound"
 
 const customHistory = createBrowserHistory()
 
@@ -24,12 +14,6 @@ const App: React.FC = () => {
             <Route path='/manage'>
                 <DashboardRoute />
             </Route>
-            {/* <Route path='/support'>
-                <SupportRoute />
-            </Route>
-            <Route path='*'>
-                <NotFoundPage />
-            </Route> */}
         </Router>
     )
 }

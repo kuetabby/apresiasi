@@ -6,7 +6,6 @@ import { gql, useQuery } from "@apollo/client"
 import { BoxFlex } from "components/utils/flex"
 import CreatorFeedsComponent from "./apresiasi_feeds"
 import CreatorProfileComponent from "./apresiasi_profile"
-// import { FooterComponent } from "components/design-system/footer"
 
 import { Root } from "./styles"
 
@@ -48,7 +47,6 @@ const ApresiasiPage: React.FC = () => {
                     <CreatorFeedsComponent id={id} data={data} onLoading={loading} onError={error} />
                 </BoxFlex>
             </Root>
-            {/* <FooterComponent /> */}
         </React.Fragment>
     )
 }
