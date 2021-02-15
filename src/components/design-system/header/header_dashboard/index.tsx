@@ -8,8 +8,6 @@ import { HeaderMainDashboard } from "./styles"
 import { NavMain } from "../styles"
 import { mediaQueries, colors, shadows } from "components/utils/variables"
 
-// import { SearchNav } from "./header_search"
-// import { NotificationNav } from "./header_notification"
 import { DrawerNav } from "./header_drawer"
 
 const BoxWrapper = styled(Box)`
@@ -40,12 +38,7 @@ const BoxUser = styled(Box)`
 
 const BoxAvatar = styled(Box)`
     width: 100%;
-    // margin-right: 30px;
     text-align: center;
-
-    // ${mediaQueries.smMax} {
-    //     margin-right: 10px;
-    // }
 `
 
 const BoxButton = styled(Button)`
@@ -118,8 +111,6 @@ export const HeaderDashboard: React.FC = () => {
                         </>
                     ) : null}
                     <Box d='flex' alignItems='center'>
-                        {/* <SearchNav />
-                        <NotificationNav /> */}
                         {error ? <p>Something went wrong...</p> : null}
                         {loading ? (
                             <Spinner />

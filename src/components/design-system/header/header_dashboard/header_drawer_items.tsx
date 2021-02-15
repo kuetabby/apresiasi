@@ -46,7 +46,6 @@ const BoxFooter = styled(Box)<BoxItemProps>`
     font-size: 1em;
     padding: 10px 0;
     width: 100%;
-    height: 30px;
     background-color: ${(props): string => (props.backgroundColor ? `${props.backgroundColor}` : `${colors.red}`)};
 
     cursor: pointer;
