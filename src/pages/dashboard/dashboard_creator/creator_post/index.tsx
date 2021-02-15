@@ -94,7 +94,7 @@ const CreatorPostComponent: React.FC<Props> = ({ data }) => {
             </BoxCover>
             <BoxFlex d='flex'>
                 <BoxRightPost>
-                    <BoxWrapper d='flex' borderColor={colors.green + "!important"}>
+                    <BoxWrapper d='flex' justifyContent='center' borderColor={colors.green + "!important"}>
                         <Settings data={data} />
                     </BoxWrapper>
                     {/* <BoxWrapper d='flex' borderColor={colors.green + "!important"}>
