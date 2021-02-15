@@ -17,15 +17,8 @@ export const DashboardRoute: React.FC = () => {
             <Suspense fallback={"loading..."}>
                 <Switch>
                     <ProtectedRoute path='/manage/my-page' component={CreatorPage} />
-                    {/* <ProtectedRoute path='/manage/balance/withdrawal' component={BalanceWithdrawPage} /> */}
-                    {/* <ProtectedRoute path='/manage/balance/bank-details' component={BalanceEditPage} /> */}
                     <ProtectedRoute path='/manage/balance' component={BalancePage} />
-                    {/* <ProtectedRoute path='/manage/tip-received' component={TipPage} /> */}
-                    {/* <ProtectedRoute path='/manage/goal-history' component={GoalPage} /> */}
-                    {/* <ProtectedRoute path='/manage/post/create' component={PostCreatePage} /> */}
-                    {/* <ProtectedRoute path='/manage/post/edit' component={PostEditPage} /> */}
                     <ProtectedRoute path='/manage/post' component={PostPage} />
-                    {/* <ProtectedRoute path='/manage/my-follower' component={FollowersPage} /> */}
                     <ProtectedRoute path='/manage/settings' component={SettingsPage} />
                     <ProtectedRoute path='/manage/dashboard' exact component={DashboardHomePage} />
                 </Switch>

@@ -19,9 +19,6 @@ export const HomeRoute: React.FC = () => {
                     <Route path='/explore' component={ExplorePage} />
                     <Route exact path='/user/:id' component={ApresiasiPage} />
                     <Route exact path='/' component={HomePage} />
-                    {/* <Route path='*'>
-                    <NotFoundPage />
-                </Route> */}
                 </Switch>
             </Suspense>
         </Fragment>

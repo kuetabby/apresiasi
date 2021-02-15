@@ -1,4 +1,3 @@
-import "./react-devtools-hook"
 import React from "react"
 import ReactDOM from "react-dom"
 import "./index.css"
