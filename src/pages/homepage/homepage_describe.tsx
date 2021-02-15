@@ -47,24 +47,15 @@ const BoxSubText = styled(Box)`
         padding: 0 0.5em 0 0.5em;
     }
 `
-
-const BoxContentImg = styled(Box)`
+const BoxImg = styled(Image)`
     width: 90rem;
     height: 18.75rem;
     box-sizing: border-box;
 
     ${mediaQueries.lg} {
-        width: 11.52rem;
-        height: 6.3125rem;
+        height: 31.25rem;
         flex-basis: 50%;
         order: 1;
-    }
-`
-const BoxImg = styled(Image)`
-    max-width: 90rem;
-    max-height: 18.75rem;
-    ${mediaQueries.lg} {
-        max-height: 31.25rem;
     }
 `
 
@@ -73,24 +64,24 @@ export const DescribeComponent: React.FC = () => {
     return (
         <WrapperDescribe>
             <BoxContent>
-                <BoxContentImg>
-                    <BoxImg
-                        src='https://trakteer.id/images/mix/bg-3.png'
-                        alt='describe-image'
-                        width='1024'
-                        height='576'
-                    />
-                </BoxContentImg>
+                <BoxImg
+                    src='https://trakteer.id/images/mix/bg-3.png'
+                    alt='describe-image'
+                    width='1024'
+                    height='576'
+                    objectFit='contain'
+                />
                 <BoxSubContent>
                     <Heading as='h2'>Platform digital untuk mendukung content creator</Heading>
                     <BoxSubText>
                         Cara bersahabat bagi content creator untuk mendapat dukungan dana dari para penikmat karyanya
                     </BoxSubText>
-                    {token ? (
+                    {token && (
                         <ButtonLink to={"/manage/dashboard"} backgroundColor={colors.red} variantColor='red'>
                             Dashboard
                         </ButtonLink>
-                    ) : (
+                    )}
+                    {!token && (
                         <ButtonLink to={"/login"} backgroundColor={colors.red} variantColor='red'>
                             Buat Halaman
                         </ButtonLink>
