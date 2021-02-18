@@ -48,7 +48,7 @@ const BoxSubText = styled(Box)`
     }
 `
 const BoxImg = styled(Image)`
-    width: 90rem;
+    width: 100%;
     height: 18.75rem;
     box-sizing: border-box;
 
