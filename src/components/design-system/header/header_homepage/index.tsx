@@ -1,72 +1,107 @@
-import React, { useEffect, useState } from "react"
-// import { NavLink } from "react-router-dom"
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons"
-import { useDisclosure, Heading } from "@chakra-ui/core"
+import React, { Suspense, lazy } from "react"
+import { useDisclosure, Heading, Spinner } from "@chakra-ui/core"
+import { NavLink } from "react-router-dom"
+import styled from "@emotion/styled"
+import { faBars } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Cookie from "js-cookie"
 
-import { HeaderMain, HamburgerIcon, CloseIcon, NavItem, NavItemList, NavList, NavCreator } from "./styles"
+import { SpeedInAnimation, NavItemCSS, NavList, NavButton } from "./styles"
 import { NavMain } from "../styles"
-// import { SearchNav } from "./header_search"
-// import { HistoryNav } from "./header_history"
+import { colors, mediaQueries } from "components/utils/variables"
+
+const HeaderSmallItems = lazy(() =>
+    import("./header_small_items").then(({ HeaderSmall }) => ({ default: HeaderSmall }))
+)
+
+const HeaderMain = styled.header`
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: auto;
+    z-index: 3;
+    background-color: ${colors.red};
+    color: white;
+`
+
+const NavHeader = styled.div`
+    ${NavItemCSS}
+`
+
+const NavBody = styled.div`
+    ${NavItemCSS}
+    ${mediaQueries.smMax} {
+        display: none;
+    }
+`
+
+const HamburgerIcon = styled(FontAwesomeIcon)`
+    color: white;
+    font-size: 2em;
+    display: none;
+
+    ${mediaQueries.smMax} {
+        margin-right: 5px;
+        display: inline-flex;
+        align-items: center;
+        display: block;
+        ${SpeedInAnimation}
+    }
+`
 
 export const HeaderHomepage: React.FC = () => {
-    const [width, setWidth] = useState(window.innerWidth)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const token = Cookie.get("token")
 
-    useEffect(() => {
-        const handleResize = (): void => {
-            setWidth(window.innerWidth)
-        }
-        window.addEventListener("resize", handleResize)
-        return (): void => window.removeEventListener("resize", handleResize)
-    }, [])
-
-    useEffect(() => {
-        if (width < 700) {
-            onClose()
-        }
-    }, [onClose, width])
+    if (isOpen) {
+        return (
+            <Suspense
+                fallback={
+                    <div style={{ textAlign: "center", margin: "1rem" }}>
+                        <Spinner />
+                    </div>
+                }
+            >
+                <HeaderSmallItems onClose={onClose} />
+            </Suspense>
+        )
+    }
 
     return (
-        <HeaderMain open={isOpen}>
+        <HeaderMain>
             <NavMain>
-                {isOpen ? null : (
-                    <NavItem to='/'>
+                <NavHeader>
+                    <NavLink style={{ textDecoration: "none", color: "white" }} to='/'>
                         <Heading as='h2' size='xl' marginLeft='5px'>
                             Apresiasi
                         </Heading>
+                    </NavLink>
+                </NavHeader>
+                <NavList>
+                    <NavItem to='/'>
+                        <p>Home</p>
                     </NavItem>
-                )}
-                <NavList open={isOpen}>
-                    <CloseIcon icon={faTimes} onClick={onClose} open={isOpen} />
-                    <NavItemList open={isOpen}>
-                        {/* <SearchNav openBar={isOpen} /> */}
-                        {/* <HistoryNav openBar={isOpen} /> */}
-                        {isOpen ? (
-                            <NavItem to='/' open={isOpen} onClick={onClose} hide={true}>
-                                Home
-                            </NavItem>
-                        ) : null}
-                        <NavItem to='/explore' open={isOpen} onClick={onClose} hide={true}>
-                            Explore
+                    <NavItem to='/explore'>Explore</NavItem>
+                    {token ? (
+                        <NavItem to='/manage/dashboard'>
+                            <NavButton variantColor='green'>Dashboard</NavButton>
                         </NavItem>
-                        {/* <NavItem to='/guide' open={isOpen} onClick={onClose} hide={true}>
-                            Guide
-                        </NavItem> */}
-                        {token ? (
-                            <NavItem to='/manage/dashboard' open={isOpen} onClick={onClose} hide={true}>
-                                <NavCreator variantColor='green'>Dashboard</NavCreator>
-                            </NavItem>
-                        ) : (
-                            <NavItem to='/login' open={isOpen} onClick={onClose} hide={true}>
-                                <NavCreator variantColor='green'>Login</NavCreator>
-                            </NavItem>
-                        )}
-                        <HamburgerIcon onClick={onOpen} open={isOpen} icon={faBars} />
-                    </NavItemList>
+                    ) : (
+                        <NavItem to='/login'>
+                            <NavButton variantColor='green'>Login</NavButton>
+                        </NavItem>
+                    )}
+                    {!isOpen && <HamburgerIcon onClick={onOpen} icon={faBars} />}
                 </NavList>
             </NavMain>
         </HeaderMain>
     )
 }
+
+const NavItem = (props: { to: string; children?: React.ReactNode }) => (
+    <NavBody>
+        <NavLink style={{ textDecoration: "none", color: "white" }} to={props.to}>
+            {props.children}
+        </NavLink>
+    </NavBody>
+)
